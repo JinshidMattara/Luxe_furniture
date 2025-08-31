@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRAFTWOOD - Premium Modern Furniture | Luxury Home Decor</title>
+    <title>LUXE - Premium Modern Furniture | Luxury Home Decor</title>
     <meta name="description" content="Discover extraordinary furniture that transforms spaces into works of art. Premium design meets uncompromising quality. Shop luxury sofas, dining tables, chairs & more.">
-    <meta name="keywords" content="luxury furniture, premium furniture, modern furniture, craftwood, home decor, interior design, luxury sofas, dining tables, chairs, bedroom furniture">
-    <meta name="author" content="CRAFTWOOD">
+    <meta name="keywords" content="luxury furniture, premium furniture, modern furniture, luxe, home decor, interior design, luxury sofas, dining tables, chairs, bedroom furniture">
+    <meta name="author" content="LUXE">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://craftwood-furniture.vercel.app/">
-    <meta property="og:title" content="CRAFTWOOD - Premium Modern Furniture | Luxury Home Decor">
+    <meta property="og:url" content="https://luxe-furniture.vercel.app/">
+    <meta property="og:title" content="LUXE - Premium Modern Furniture | Luxury Home Decor">
     <meta property="og:description" content="Discover extraordinary furniture that transforms spaces into works of art. Premium design meets uncompromising quality.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=630&fit=crop&auto=format">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="CRAFTWOOD">
+    <meta property="og:site_name" content="LUXE">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://craftwood-furniture.vercel.app/">
-    <meta property="twitter:title" content="CRAFTWOOD - Premium Modern Furniture">
+    <meta property="twitter:url" content="https://luxe-furniture.vercel.app/">
+    <meta property="twitter:title" content="LUXE - Premium Modern Furniture">
     <meta property="twitter:description" content="Discover extraordinary furniture that transforms spaces into works of art. Premium design meets uncompromising quality.">
     <meta property="twitter:image" content="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&h=630&fit=crop&auto=format">
     
@@ -47,7 +47,12 @@
     <nav class="nav" id="navbar">
         <div class="nav-container">
             <a href="#" class="logo">LUXE</a>
-            <ul class="nav-menu">
+            <div class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#products" class="nav-link">Collection</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
@@ -572,12 +577,16 @@
             }, 1500);
         });
 
-        // Custom Cursor
+        // Custom Cursor (disabled on mobile)
         const cursor = document.querySelector('.cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+        } else {
+            cursor.style.display = 'none';
+        }
 
         // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
@@ -587,6 +596,31 @@
             } else {
                 navbar.classList.remove('scrolled');
             }
+        });
+        
+        // Close mobile menu on scroll
+        window.addEventListener('scroll', () => {
+            if (navMenu.classList.contains('active')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        
+        navToggle.addEventListener('click', () => {
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on nav links
+        document.querySelectorAll('.nav-link, .nav-cta').forEach(link => {
+            link.addEventListener('click', () => {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
         });
 
         // Smooth Scrolling
